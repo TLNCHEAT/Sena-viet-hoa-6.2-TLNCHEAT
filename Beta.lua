@@ -1,19 +1,34 @@
 -- ==========================================
--- SENAHUB VIỆT HÓA - FULL v6
+-- SENAHUB VIỆT HÓA
 -- Tiktok: hetcuu83
 -- ==========================================
+
+-- 1. CHẠY SCRIPT GỐC ĐỘC LẬP (ĐẢM BẢO KHÔNG MẤT MENU)
+task.spawn(function()
+    local ok, src = pcall(function()
+        return game:HttpGet("https://senahub.xyz/senav6")
+    end)
+    if ok and src and #src > 0 then
+        local chunk, err = loadstring(src)
+        if chunk then
+            pcall(chunk)
+        else
+            warn("[SenaHub VN] Lỗi loadstring gốc:", err)
+        end
+    end
+end)
 
 local CoreGui  = game:GetService("CoreGui")
 local TweenSvc = game:GetService("TweenService")
 local Players  = game:GetService("Players")
 local LP       = Players.LocalPlayer
 
--- Generation ID — kill stale hooks từ lần chạy trước
+-- Generation ID
 local GEN = tostring(math.floor(tick() * 1000))
 _G.__VNGEN = GEN
 
 -- ══════════════════════════════════════════
---  WATERMARK SIÊU CẤP
+-- 2. WATERMARK MINI GÓC MÀN HÌNH (GỌN ĐẸP, KHÔNG CHE NÚT ROBLOX)
 -- ══════════════════════════════════════════
 pcall(function()
     local old = CoreGui:FindFirstChild("WM_hetcuu83")
@@ -27,79 +42,26 @@ pcall(function()
     sg.Parent         = CoreGui
 
     local bar = Instance.new("Frame", sg)
-    bar.Size                   = UDim2.new(1, 0, 0, 36)
-    bar.Position               = UDim2.new(0, 0, 0, 0)
-    bar.BackgroundColor3       = Color3.fromRGB(10, 5, 20)
-    bar.BackgroundTransparency = 0
+    bar.Size                   = UDim2.new(0, 180, 0, 22)
+    bar.Position               = UDim2.new(0, 10, 0, 5)
+    bar.BackgroundColor3       = Color3.fromRGB(15, 8, 30)
+    bar.BackgroundTransparency = 0.2
     bar.BorderSizePixel        = 0
     bar.ZIndex                 = 10
+    Instance.new("UICorner", bar).CornerRadius = UDim.new(0, 6)
 
-    local grad = Instance.new("UIGradient", bar)
-    grad.Color = ColorSequence.new({
-        ColorSequenceKeypoint.new(0,   Color3.fromRGB(20,  5,  45)),
-        ColorSequenceKeypoint.new(0.5, Color3.fromRGB(50, 10,  80)),
-        ColorSequenceKeypoint.new(1,   Color3.fromRGB(20,  5,  45)),
-    })
-
-    local border = Instance.new("Frame", bar)
-    border.Size             = UDim2.new(1, 0, 0, 2)
-    border.Position         = UDim2.new(0, 0, 1, -2)
-    border.BackgroundColor3 = Color3.fromRGB(180, 50, 255)
-    border.BorderSizePixel  = 0
-    border.ZIndex           = 11
-
-    local function mkIco(xPos)
-        local i = Instance.new("TextLabel", bar)
-        i.Size = UDim2.new(0, 30, 1, 0)
-        i.Position = UDim2.new(xPos, 0, 0, 0)
-        i.BackgroundTransparency = 1
-        i.Text = "✦"
-        i.TextColor3 = Color3.fromRGB(200, 80, 255)
-        i.TextSize = 20
-        i.Font = Enum.Font.GothamBold
-        i.ZIndex = 12
-        return i
-    end
-    local ico  = mkIco(0)
-    local ico2 = Instance.new("TextLabel", bar)
-    ico2.Size = UDim2.new(0, 30, 1, 0)
-    ico2.AnchorPoint = Vector2.new(1, 0)
-    ico2.Position = UDim2.new(1, -88, 0, 0)
-    ico2.BackgroundTransparency = 1
-    ico2.Text = "✦"
-    ico2.TextColor3 = Color3.fromRGB(200, 80, 255)
-    ico2.TextSize = 20
-    ico2.Font = Enum.Font.GothamBold
-    ico2.ZIndex = 12
+    local stroke = Instance.new("UIStroke", bar)
+    stroke.Color = Color3.fromRGB(180, 50, 255)
+    stroke.Thickness = 1
 
     local lbl = Instance.new("TextLabel", bar)
-    lbl.Size = UDim2.new(1, -130, 1, 0)
-    lbl.Position = UDim2.new(0, 34, 0, 0)
+    lbl.Size = UDim2.new(1, 0, 1, 0)
     lbl.BackgroundTransparency = 1
-    lbl.Text = "✧  Tiktok : hetcuu83  ✧"
-    lbl.TextColor3 = Color3.fromRGB(230, 140, 255)
-    lbl.TextSize = 15
+    lbl.Text = "★ Tiktok: hetcuu83 | SenaV6 ★"
+    lbl.TextColor3 = Color3.fromRGB(230, 160, 255)
+    lbl.TextSize = 10
     lbl.Font = Enum.Font.GothamBold
     lbl.ZIndex = 12
-    local stroke = Instance.new("UIStroke", lbl)
-    stroke.Color = Color3.fromRGB(110, 0, 170)
-    stroke.Thickness = 1.5
-
-    local badge = Instance.new("Frame", bar)
-    badge.Size = UDim2.new(0, 82, 0, 22)
-    badge.Position = UDim2.new(1, -88, 0.5, -11)
-    badge.BackgroundColor3 = Color3.fromRGB(130, 25, 210)
-    badge.BorderSizePixel = 0
-    badge.ZIndex = 12
-    Instance.new("UICorner", badge).CornerRadius = UDim.new(0, 6)
-    local btxt = Instance.new("TextLabel", badge)
-    btxt.Size = UDim2.new(1, 0, 1, 0)
-    btxt.BackgroundTransparency = 1
-    btxt.Text = "SenaV6 VN"
-    btxt.TextColor3 = Color3.fromRGB(255, 255, 255)
-    btxt.TextSize = 11
-    btxt.Font = Enum.Font.GothamBold
-    btxt.ZIndex = 13
 
     local palette = {
         Color3.fromRGB(200, 80, 255), Color3.fromRGB(80, 180, 255),
@@ -108,58 +70,27 @@ pcall(function()
     }
     local ci = 1
     task.spawn(function()
-        while badge and badge.Parent do
-            task.wait(1.1)
+        while bar and bar.Parent do
+            task.wait(1.2)
             ci = ci % #palette + 1
             local c = palette[ci]
-            local ti = TweenInfo.new(0.7, Enum.EasingStyle.Sine)
-            TweenSvc:Create(ico,    ti, {TextColor3 = c}):Play()
-            TweenSvc:Create(ico2,   ti, {TextColor3 = c}):Play()
-            TweenSvc:Create(border, ti, {BackgroundColor3 = c}):Play()
-        end
-    end)
-    task.spawn(function()
-        local r = 0
-        while bar and bar.Parent do
-            task.wait(0.04)
-            r = (r + 1) % 360
-            grad.Rotation = r
+            TweenSvc:Create(stroke, TweenInfo.new(0.8), {Color = c}):Play()
+            TweenSvc:Create(lbl, TweenInfo.new(0.8), {TextColor3 = c}):Play()
         end
     end)
 end)
 
 -- ══════════════════════════════════════════
---  LOAD SENA GỐC (KÈM CHỐNG LỖI KẾT NỐI)
--- ══════════════════════════════════════════
-task.spawn(function()
-    local urls = {
-        "https://senahub.xyz/senav6",
-        -- Thêm link dự phòng/raw github của bạn ở đây nếu link senahub bị hỏng
-    }
-    local loaded = false
-    for _, url in ipairs(urls) do
-        local ok, src = pcall(function()
-            return game:HttpGet(url, true)
-        end)
-        if ok and src and #src > 0 and not src:find("404") and not src:find("Cloudflare") then
-            local func, err = loadstring(src)
-            if func then
-                pcall(func)
-                loaded = true
-                break
-            end
-        end
-    end
-    if not loaded then
-        warn("[SenaHub VN] Không thể kết nối tới link senahub.xyz (Server bảo trì hoặc đổi domain).")
-    end
-end)
-
--- ══════════════════════════════════════════
---  BẢNG DỊCH ĐẦY ĐỦ - STEAL AN EGG
+-- 3. BẢNG DỊCH FULL 100% TẤT CẢ TÍNH NĂNG
 -- ══════════════════════════════════════════
 local D = {
-    -- ── TAB CHÍNH ─────────────────────────
+    -- STATS BAR & FOOTER
+    ["stolen"]                     = "đã trộm",
+    ["search"]                     = "Tìm kiếm...",
+    ["trial"]                      = "Bản Thử Nghiệm",
+    ["premium"]                    = "Bản Cao Cấp",
+
+    -- TAB CHÍNH & CỬA SỔ
     ["windows"]                    = "Cửa Sổ",
     ["egg logs"]                   = "Nhật Ký Trứng",
     ["live feed of every egg that spawns on the server."] = "Cập nhật trực tiếp mọi trứng xuất hiện trên server.",
@@ -170,7 +101,7 @@ local D = {
     ["egg data & history"]         = "Dữ Liệu & Lịch Sử Trứng",
     ["open all windows"]           = "Mở Tất Cả Cửa Sổ",
 
-    -- ── AUTO STEAL (tab chính) ────────────
+    -- AUTO STEAL
     ["auto steal"]                 = "Tự Động Trộm",
     ["tự động trộm"]               = "Tự Động Trộm",
     ["steal an egg"]               = "Trộm Trứng",
@@ -189,56 +120,56 @@ local D = {
     ["high speed user (fly)"]      = "Chế Độ Nhanh (Bay)",
     ["steal mode"]                 = "Chế Độ Trộm",
     ["boost for low speed mode"]   = "Tăng Tốc Chế Độ Chậm",
-    ["faster steal for low speed mode in every area except forest (limit 6 s per egg). keep it on when you use low speed user."] = "Trộm nhanh hơn ở mọi khu vực trừ Rừng (giới hạn 6 giây/trứng).",
+    ["faster steal for low speed mode in every area except forest (limit 6 s per egg). keep it on when you use low speed user."] = "Trộm nhanh hơn ở mọi khu vực trừ Rừng (giới hạn 6s/trứng).",
     ["speed advice"]               = "Lời Khuyên Tốc Độ",
-    ["if you have good speed better use high speed user, but if you are newbie, use low speed user"] = "Tốc độ tốt → dùng Chế độ Nhanh. Người mới → dùng Chế độ Chậm.",
-    ["low speed mode"]             = "Chế Độ Tốc Độ Thấp",
-    ["high speed mode (normal)"]   = "Chế Độ Tốc Độ Cao (Thường)",
-    ["high speed mode (fly)"]      = "Chế Độ Tốc Độ Cao (Bay)",
-    ["zig-zag high speed mode"]    = "Chế Độ Tốc Độ Cao Zig-Zag",
+    ["if you have good speed better use high speed user, but if you are newbie, use low speed user"] = "Tốc độ tốt → Dùng chế độ Nhanh. Người mới → Dùng chế độ Chậm.",
+    ["low speed mode"]             = "Chế Độ Chậm",
+    ["high speed mode (normal)"]   = "Chế Độ Nhanh (Thường)",
+    ["high speed mode (fly)"]      = "Chế Độ Nhanh (Bay)",
+    ["zig-zag high speed mode"]    = "Chế Độ Nhanh Zig-Zag",
 
-    -- ── BỘ LỌC TRỨNG ─────────────────────
+    -- EGG FILTER
     ["egg filter"]                 = "Lọc Trứng",
     ["filter by egg name"]         = "Lọc Theo Tên Trứng",
-    ["only steal these eggs. leave empty for any egg."] = "Chỉ trộm những trứng này. Để trống = mọi trứng.",
+    ["only steal these eggs. leave empty for any egg."] = "Chỉ trộm những trứng này. Để trống = Tất cả.",
     ["filter by rarity"]           = "Lọc Theo Độ Hiếm",
-    ["only steal these rarities. leave empty for any rarity."] = "Chỉ trộm độ hiếm này. Để trống = mọi độ hiếm.",
+    ["only steal these rarities. leave empty for any rarity."] = "Chỉ trộm độ hiếm này. Để trống = Tất cả.",
     ["filter by area"]             = "Lọc Theo Khu Vực",
     ["select area"]                = "Chọn Khu Vực",
-    ["only steal from these areas. leave empty for every area."] = "Chỉ trộm từ khu vực này. Để trống = tất cả.",
+    ["only steal from these areas. leave empty for every area."] = "Chỉ trộm từ khu vực này. Để trống = Tất cả.",
     ["filter by mutation"]         = "Lọc Theo Đột Biến",
-    ["only steal eggs carrying one of these mutations. leave empty for any egg."] = "Chỉ trộm trứng có đột biến này. Để trống = mọi trứng.",
+    ["only steal eggs carrying one of these mutations. leave empty for any egg."] = "Chỉ trộm trứng đột biến này.",
     ["area & value"]               = "Khu Vực & Giá Trị",
     ["steal by value"]             = "Trộm Theo Giá Trị",
     ["minimum cash per sec. supports k, m and b."] = "Số tiền tối thiểu/giây. Hỗ trợ k, m và b.",
     ["minimum value"]              = "Giá Trị Tối Thiểu",
     ["steal by weight"]            = "Trộm Theo Cân Nặng",
-    ["minimum egg weight in kilograms. 0 accepts any weight."] = "Trọng lượng tối thiểu (kg). 0 = mọi cân nặng.",
+    ["minimum egg weight in kilograms. 0 accepts any weight."] = "Trọng lượng tối thiểu (kg). 0 = Mọi cân nặng.",
     ["steal priority"]             = "Ưu Tiên Trộm",
-    ["which egg to go for first when more than one passes the filters."] = "Ưu tiên trứng nào khi nhiều trứng thỏa bộ lọc.",
+    ["which egg to go for first when more than one passes the filters."] = "Ưu tiên trứng thỏa bộ lọc trước.",
     ["filter by species"]          = "Lọc Theo Loài",
     ["match by"]                   = "Khớp Theo",
 
-    -- ── ESP ───────────────────────────────
+    -- ESP
     ["egg esp"]                    = "Hiện Vị Trí Trứng",
     ["esp details"]                = "Chi Tiết Hiển Thị",
-    ["what each label shows. placed eggs also labels the egg on your plot, icon adds the animal picture to those labels."] = "Nội dung hiển thị. Trứng đã đặt cũng hiện nhãn trên lô đất, Icon thêm hình ảnh thú cưng.",
-    ["esp min rarity"]             = "Độ Hiếm Tối Thiểu Hiển Thị",
+    ["what each label shows. placed eggs also labels the egg on your plot, icon adds the animal picture to those labels."] = "Nội dung hiển thị nhãn ESP.",
+    ["esp min rarity"]             = "Độ Hiếm Tối Thiểu ESP",
     ["only label eggs of this rarity or higher. any labels every egg."] = "Chỉ hiện nhãn từ độ hiếm này trở lên.",
-    ["esp min value"]              = "Giá Trị Tối Thiểu Hiển Thị",
-    ["only label eggs making at least this much per second. supports k, m and b."] = "Chỉ hiện nhãn trứng tạo ít nhất chừng này tiền/giây.",
+    ["esp min value"]              = "Giá Trị Tối Thiểu ESP",
+    ["only label eggs making at least this much per second. supports k, m and b."] = "Chỉ hiện nhãn trứng tạo đủ tiền/s.",
     ["backpack value/s"]           = "Giá Trị Ba Lô/Giây",
     ["butterfly esp"]              = "Hiện Vị Trí Bướm",
 
-    -- ── WEBHOOK ───────────────────────────
+    -- WEBHOOK & PLAYERS
     ["steal webhook"]              = "Webhook Trộm",
     ["test webhook"]               = "Kiểm Tra Webhook",
     ["webhook url"]                = "Đường Dẫn Webhook",
     ["steal from players"]         = "Trộm Từ Người Chơi",
-    ["steal from specific player"] = "Trộm Từ Người Cụ Thể",
+    ["steal from specific player"] = "Trộm Người Cụ Thể",
     ["auto steal from players"]    = "Tự Động Trộm Từ Người Chơi",
-    ["chases anyone carrying an egg in the field, bats them until the egg drops, grabs it and banks it. a carrier is only chased when the egg passes the filters below."] = "Đuổi người cầm trứng, đánh cho rơi trứng rồi mang về. Chỉ đuổi khi trứng thỏa bộ lọc.",
-    ["skip carriers holding less than this per sec. supports k, m and b."] = "Bỏ qua người có giá trị thấp hơn mức này. Hỗ trợ k, m và b.",
+    ["chases anyone carrying an egg in the field, bats them until the egg drops, grabs it and banks it. a carrier is only chased when the egg passes the filters below."] = "Đuổi đánh người cầm trứng để cướp.",
+    ["skip carriers holding less than this per sec. supports k, m and b."] = "Bỏ qua người có giá trị thấp hơn mức này.",
     ["steal history"]              = "Lịch Sử Trộm",
     ["clear history"]              = "Xóa Lịch Sử",
     ["auto index"]                 = "Tự Động Index",
@@ -247,7 +178,7 @@ local D = {
     ["idle in safe zone"]          = "Đứng Yên Trong Vùng An Toàn",
     ["steal"]                      = "Trộm",
 
-    -- ── TAB AUTO (TRỨNG) ─────────────────
+    -- EGG AUTOMATION
     ["egg automation"]             = "Tự Động Hóa Trứng",
     ["placed eggs"]                = "Trứng Đã Đặt",
     ["your placed eggs"]           = "Trứng Bạn Đã Đặt",
@@ -262,10 +193,10 @@ local D = {
     ["sell eggs now"]              = "Bán Trứng Ngay",
     ["select mutation"]            = "Chọn Đột Biến",
     ["retry until mutated"]        = "Thử Lại Cho Đến Khi Đột Biến",
-    ["auto apply mutation"]        = "Tự Động Áp Dụng Đột Biến",
+    ["auto apply mutation"]        = "Tự Áp Dụng Đột Biến",
     ["apply mutation now"]         = "Áp Dụng Đột Biến Ngay",
 
-    -- ── TAB THÚ CƯNG ─────────────────────
+    -- PETS
     ["pet selling"]                = "Bán Thú Cưng",
     ["pet favorite"]               = "Thú Cưng Yêu Thích",
     ["pet fusion"]                 = "Hợp Nhất Thú Cưng",
@@ -275,48 +206,88 @@ local D = {
     ["auto favorite"]              = "Tự Động Yêu Thích",
     ["unfavorite everything"]      = "Bỏ Yêu Thích Tất Cả",
     ["auto fuse"]                  = "Tự Động Hợp Nhất",
-    ["auto equip best"]            = "Tự Động Trang Bị Tốt Nhất",
+    ["auto equip best"]            = "Mặc Thú Cưng Tốt Nhất",
     ["collect offline income"]     = "Thu Tiền Ngoại Tuyến",
     ["auto upgrade base"]          = "Tự Động Nâng Cấp Căn Cứ",
     ["auto claim almanac"]         = "Tự Động Nhận Almanac",
-    ["marks every pet that matches the rule below as a favorite, so auto sell and auto fuse leave it alone."] = "Đánh dấu thú cưng thỏa quy tắc là Yêu thích, Tự động bán và Hợp nhất sẽ không đụng tới.",
+    ["marks every pet that matches the rule below as a favorite, so auto sell and auto fuse leave it alone."] = "Đánh dấu thú cưng Yêu thích để không bị bán/hợp nhất.",
     ["favorite rule"]              = "Quy Tắc Yêu Thích",
-    ["match pet by rarity or by species."] = "Khớp thú cưng theo độ hiếm hoặc theo loài.",
+    ["match pet by rarity or by species."] = "Khớp theo độ hiếm hoặc loài.",
     ["only when rule = rarity"]    = "Chỉ Khi Quy Tắc = Độ Hiếm",
-    ["rarities to keep"]           = "Độ Hiếm Muốn Giữ",
-    ["pets of these rarities get favorited."] = "Thú cưng có độ hiếm này sẽ được yêu thích.",
-    ["sell by value (max cash/s)"] = "Bán Theo Giá Trị (Tối Đa Tiền/Giây)",
-    ["only sell pets whose cash per second is this or lower. blank = no value limit. supports k, m, b."] = "Chỉ bán thú cưng có tiền/giây ≤ mức này. Để trống = không giới hạn. Hỗ trợ k, m, b.",
+    ["rarities to keep"]           = "Độ Hiếm Giữ Lại",
+    ["pets of these rarities get favorited."] = "Thú cưng độ hiếm này sẽ được khóa.",
+    ["sell by value (max cash/s)"] = "Bán Theo Giá Trị Tối Đa (Tiền/s)",
+    ["only sell pets whose cash per second is this or lower. blank = no value limit. supports k, m, b."] = "Chỉ bán pet có tiền/s ≤ mức này.",
     ["fuse rule"]                  = "Quy Tắc Hợp Nhất",
-    ["fuse anything that passes the rarity filter, or only the species you pick below."] = "Hợp nhất bất kỳ thứ gì qua bộ lọc độ hiếm, hoặc chỉ loài bạn chọn.",
     ["rarities to fuse"]           = "Độ Hiếm Để Hợp Nhất",
-    ["only fuse pets of these rarities. leave empty for any rarity."] = "Chỉ hợp nhất thú cưng có độ hiếm này. Để trống = mọi độ hiếm.",
-    ["feeds three matching pets into the fuse machine over and over. favorited and equipped pets are never used."] = "Đưa 3 thú cưng giống nhau vào máy hợp nhất liên tục. Thú cưng yêu thích và đang trang bị sẽ không bị dùng.",
+    ["fuse anything that passes the rarity filter, or only the species you pick below."] = "Hợp nhất bất kỳ thứ gì qua bộ lọc độ hiếm.",
+    ["only fuse pets of these rarities. leave empty for any rarity."] = "Chỉ hợp nhất thú cưng có độ hiếm này.",
+    ["feeds three matching pets into the fuse machine over and over. favorited and equipped pets are never used."] = "Đưa 3 thú cưng giống nhau vào máy hợp nhất liên tục.",
 
-    -- ── TAB SỰ KIỆN ──────────────────────
+    -- SỰ KIỆN (EVENTS ALL)
+    ["farm star"]                  = "Cày Sao",
+    ["auto farm star"]             = "Tự Động Cày Sao",
+    ["star farm"]                  = "Cày Sao",
+    ["auto star"]                  = "Tự Động Sao",
+    ["collect star"]               = "Thu Nhặt Sao",
+    ["auto collect star"]          = "Tự Động Nhặt Sao",
+    ["star speed"]                 = "Tốc Độ Nhặt Sao",
+    ["star distance"]              = "Khoảng Cách Nhặt Sao",
+    ["teleport to star"]           = "Dịch Chuyển Đến Sao",
+
+    ["race rally"]                 = "Đua Tốc Độ",
+    ["auto race rally"]            = "Tự Động Đua Tốc Độ",
+    ["auto race"]                  = "Tự Động Đua",
+    ["race speed"]                 = "Tốc Độ Đua",
+    ["auto finish race"]           = "Tự Động Hoàn Thành Đua",
+    ["teleport to finish"]         = "Dịch Chuyển Về Đích",
+    ["auto join race"]             = "Tự Động Tham Gia Đua",
+    ["race delay"]                 = "Độ Trễ Đua",
+    ["bypass race"]                = "Bỏ Qua Đua",
+
     ["capture the egg"]            = "Bắt Trứng",
     ["auto steal capture"]         = "Tự Động Bắt Trứng",
-    ["auto ring event"]            = "Tự Động Vòng Sự Kiện",
+    ["auto capture"]               = "Tự Động Bắt",
+    ["capture mode"]               = "Chế Độ Bắt",
+    ["capture speed"]              = "Tốc Độ Bắt",
+
     ["ring event"]                 = "Vòng Sự Kiện",
-    ["ring sự kiện"]               = "Vòng Sự Kiện",
+    ["auto ring event"]            = "Tự Động Vòng Sự Kiện",
+    ["auto collect rings"]         = "Tự Động Nhặt Vòng",
+    ["ring distance"]              = "Khoảng Cách Vòng",
+    ["ring speed"]                 = "Tốc Độ Nhặt Vòng",
+
     ["wisp event"]                 = "Sự Kiện Wisp",
+    ["auto wisp"]                  = "Tự Động Wisp",
+    ["auto collect wisp"]          = "Tự Động Nhặt Wisp",
+    ["wisp speed"]                 = "Tốc Độ Wisp",
+
     ["butterfly bloom"]            = "Hoa Bướm Nở",
+    ["auto butterfly bloom"]       = "Tự Động Hoa Bướm Nở",
     ["auto claim net"]             = "Tự Động Nhận Lưới",
+    ["auto catch butterfly"]       = "Tự Động Bắt Bướm",
     ["auto catch"]                 = "Tự Động Bắt",
-    ["race rally"]                 = "Đua Tốc Độ",
+
     ["shooting star"]              = "Sao Băng",
+    ["auto shooting star"]         = "Tự Động Bắt Sao Băng",
+    ["collect shooting star"]      = "Thu Nhặt Sao Băng",
+
     ["dr scramble event"]          = "Sự Kiện Dr Scramble",
+    ["scramble event"]             = "Sự Kiện Scramble",
+    ["auto scramble"]              = "Tự Động Scramble",
+    ["auto answer"]                = "Tự Động Trả Lời",
+
     ["auto trade up"]              = "Tự Động Đổi Lên",
-    ["auto craft essence"]         = "Tự Động Chế Tạo Tinh Chất",
-    ["auto buy shop"]              = "Tự Động Mua Cửa Hàng",
+    ["auto craft essence"]         = "Tự Động Chế Tinh Chất",
+    ["auto buy shop"]              = "Tự Động Mua Shop",
     ["auto trade-in"]              = "Tự Động Đổi Trả",
-    ["auto free reroll"]           = "Tự Động Quay Miễn Phí",
+    ["auto free reroll"]           = "Quay Miễn Phí",
     ["open trade-in ui"]           = "Mở Giao Diện Đổi Trả",
     ["auto boss"]                  = "Tự Động Đánh Boss",
-    ["auto treadmill"]             = "Tự Động Máy Chạy Bộ",
-    ["auto upgrade treadmill"]     = "Tự Động Nâng Cấp Máy Chạy",
+    ["auto treadmill"]             = "Tự Động Máy Chạy",
+    ["auto upgrade treadmill"]     = "Tự Nâng Cấp Máy Chạy",
 
-    -- ── TAB DI CHUYỂN ────────────────────
+    -- MOVEMENT
     ["movement"]                   = "Di Chuyển",
     ["treadmill"]                  = "Máy Chạy Bộ",
     ["blocker"]                    = "Chặn",
@@ -327,60 +298,55 @@ local D = {
     ["glide speed"]                = "Tốc Độ Lướt",
     ["glide"]                      = "Lướt",
     ["blink"]                      = "Nhấp Nháy",
-    ["waypoint teleport"]          = "Dịch Chuyển Điểm Đến",
+    ["waypoint teleport"]          = "Dịch Chuyển Điểm",
     ["waypoint"]                   = "Điểm Đến",
 
-    -- ── TAB MISC ─────────────────────────
+    -- MISC
     ["performance"]                = "Hiệu Suất",
     ["startup boost"]              = "Tăng Tốc Khởi Động",
     ["boost fps"]                  = "Tăng FPS",
-    ["uncap fps"]                  = "Bỏ Giới Hạn FPS",
+    ["uncap fps"]                  = "Mở Khóa FPS",
     ["strip heavy visuals"]        = "Ẩn Đồ Họa Nặng",
     ["guard"]                      = "Bảo Vệ",
-    ["anti guard knockback"]       = "Chống Bị Đẩy Bởi Guard",
+    ["anti guard knockback"]       = "Chống Bị Đẩy",
     ["anti hit guard"]             = "Chống Đánh Nhầm Guard",
-    ["anti treadmill"]             = "Chống Máy Chạy Bộ",
+    ["anti treadmill"]             = "Chống Máy Chạy",
     ["session"]                    = "Phiên",
     ["task order"]                 = "Thứ Tự Nhiệm Vụ",
-    ["run once"]                   = "Chạy Một Lần",
+    ["run once"]                   = "Chạy 1 Lần",
     ["botting mode"]               = "Chế Độ Bot",
-    ["anti cutscene"]              = "Bỏ Qua Cắt Cảnh",
+    ["anti cutscene"]              = "Bỏ Cutscene",
     ["anti afk"]                   = "Chống AFK",
-    ["auto reconnect"]             = "Tự Động Kết Nối Lại",
-    ["auto execute"]               = "Tự Động Thực Thi",
-    ["auto execute (rejoin)"]      = "Tự Động Thực Thi (Vào Lại)",
+    ["auto reconnect"]             = "Tự Kết Nối Lại",
+    ["auto execute"]               = "Tự Chạy Script",
+    ["auto execute (rejoin)"]      = "Tự Chạy Khi Vào Lại",
     ["rejoin this server"]         = "Vào Lại Server Này",
     ["rejoin server"]              = "Vào Lại Server",
     ["stop & unload"]              = "Dừng & Gỡ Script",
-    ["hop when nothing matches"]   = "Chuyển Server Khi Không Có Trứng",
+    ["hop when nothing matches"]   = "Chuyển Server Khi Hết Trứng",
     ["auto hop"]                   = "Tự Động Chuyển Server",
     ["hop server now"]             = "Chuyển Server Ngay",
 
-    -- ── TAB VISUAL ───────────────────────
+    -- VISUAL & SERVER
     ["fish it"]                    = "Câu Cá",
     ["hold in hand"]               = "Cầm Trên Tay",
-    ["add to backpack"]            = "Thêm Vào Ba Lô",
+    ["add to backpack"]            = "Thêm Vào Balo",
     ["remove visuals"]             = "Xóa Hiển Thị",
-    ["remove all visual items"]    = "Xóa Tất Cả Vật Phẩm Hiển Thị",
-    ["visual items"]               = "Vật Phẩm Hiển Thị",
-
-    -- ── TAB SERVER ───────────────────────
+    ["remove all visual items"]    = "Xóa Tất Cả Đồ Ảo",
+    ["visual items"]               = "Vật Phẩm Ảo",
     ["server hop"]                 = "Chuyển Server",
     ["find private server"]        = "Tìm Server Riêng",
     ["current server"]             = "Server Hiện Tại",
     ["max players"]                = "Số Người Tối Đa",
     ["pick a max player count, then hop server now."] = "Chọn số người tối đa rồi chuyển server.",
-    ["the most players you want in your server, you included. 2 (you + 1) is the easiest to find."] = "Số người tối đa trong server, tính cả bạn. 2 (bạn + 1) là dễ tìm nhất.",
 
-    -- ── TAB CONFIG ───────────────────────
+    -- CONFIG
     ["config configuration"]       = "Cấu Hình",
     ["config manager"]             = "Quản Lý Cấu Hình",
     ["save: none"]                 = "Lưu: Không Có",
     ["config name"]                = "Tên Cấu Hình",
-    ["write config name here"]     = "Nhập tên cấu hình ở đây",
+    ["write config name here"]     = "Nhập tên cấu hình...",
     ["select config"]              = "Chọn Cấu Hình",
-    ["select option"]              = "Chọn Tùy Chọn",
-    ["select options"]             = "Chọn Tùy Chọn",
     ["save config"]                = "Lưu Config",
     ["load config"]                = "Tải Config",
     ["delete config"]              = "Xóa Config",
@@ -390,4 +356,41 @@ local D = {
     ["external config"]            = "Config Bên Ngoài",
     ["folder management"]          = "Quản Lý Thư Mục",
     ["paste raw json config here"] = "Dán JSON config vào đây",
-    ["aut
+    ["auto-load configuration"]    = "Cấu Hình Tự Tải",
+    ["auto load state"]            = "Trạng Thái Tự Tải",
+    ["set auto load"]              = "Đặt Tự Tải",
+    ["clear auto load"]            = "Xóa Tự Tải",
+    ["reset configuration"]        = "Đặt Lại Cấu Hình"
+}
+
+-- ══════════════════════════════════════════
+-- 4. CƠ CHẾ DỊCH AN TOÀN TỐI ƯU
+-- ══════════════════════════════════════════
+local function translateObj(obj)
+    if obj:IsA("TextLabel") or obj:IsA("TextButton") or obj:IsA("TextBox") then
+        local text = obj.Text
+        if text and #text > 0 then
+            local cleanKey = string.lower(text):gsub("^%s*(.-)%s*$", "%1")
+            if D[cleanKey] then
+                obj.Text = D[cleanKey]
+            elseif cleanKey:find("welcome") then
+                obj.Text = cleanKey:gsub("welcome", "Xin chào")
+            end
+        end
+    end
+end
+
+task.spawn(function()
+    task.wait(2) -- Chờ UI gốc khởi tạo xong hẳn
+    pcall(function()
+        for _, gui in ipairs({CoreGui, LP:WaitForChild("PlayerGui")}) do
+            for _, desc in ipairs(gui:GetDescendants()) do
+                translateObj(desc)
+            end
+            gui.DescendantAdded:Connect(function(desc)
+                task.wait(0.05)
+                translateObj(desc)
+            end)
+        end
+    end)
+end)
