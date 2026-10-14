@@ -129,15 +129,29 @@ pcall(function()
 end)
 
 -- ══════════════════════════════════════════
---  LOAD SENA GỐC
+--  LOAD SENA GỐC (KÈM CHỐNG LỖI KẾT NỐI)
 -- ══════════════════════════════════════════
 task.spawn(function()
-    local ok, src = pcall(function()
-        return game:HttpGet("https://senahub.xyz/senav6")
-    end)
-    if ok and src and #src > 0 then
-        local chunk = loadstring(src)
-        if chunk then pcall(chunk) end
+    local urls = {
+        "https://senahub.xyz/senav6",
+        -- Thêm link dự phòng/raw github của bạn ở đây nếu link senahub bị hỏng
+    }
+    local loaded = false
+    for _, url in ipairs(urls) do
+        local ok, src = pcall(function()
+            return game:HttpGet(url, true)
+        end)
+        if ok and src and #src > 0 and not src:find("404") and not src:find("Cloudflare") then
+            local func, err = loadstring(src)
+            if func then
+                pcall(func)
+                loaded = true
+                break
+            end
+        end
+    end
+    if not loaded then
+        warn("[SenaHub VN] Không thể kết nối tới link senahub.xyz (Server bảo trì hoặc đổi domain).")
     end
 end)
 
@@ -376,15 +390,4 @@ local D = {
     ["external config"]            = "Config Bên Ngoài",
     ["folder management"]          = "Quản Lý Thư Mục",
     ["paste raw json config here"] = "Dán JSON config vào đây",
-    ["auto-load configuration"]    = "Cấu Hình Tự Động Tải",
-    ["auto load state"]            = "Trạng Thái Tự Động Tải",
-    ["set auto load"]              = "Đặt Tự Động Tải",
-    ["clear auto load"]            = "Xóa Tự Động Tải",
-    ["reset configuration"]        = "Đặt Lại Cấu Hình"
-}
-
--- ══════════════════════════════════════════
---  AUTO-TRANSLATOR (BỘ TỰ ĐỘNG DỊCH GIAO DIỆN)
--- ══════════════════════════════════════════
-local function translateObj(obj)
-    if obj:IsA("TextLabel") or obj:IsA("TextButton") o
+    ["aut
