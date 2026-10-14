@@ -143,10 +143,8 @@ end)
 
 -- ══════════════════════════════════════════
 --  BẢNG DỊCH ĐẦY ĐỦ - STEAL AN EGG
---  Exact match only. Không dịch toggle state.
 -- ══════════════════════════════════════════
 local D = {
-
     -- ── TAB CHÍNH ─────────────────────────
     ["windows"]                    = "Cửa Sổ",
     ["egg logs"]                   = "Nhật Ký Trứng",
@@ -279,7 +277,6 @@ local D = {
     ["fuse anything that passes the rarity filter, or only the species you pick below."] = "Hợp nhất bất kỳ thứ gì qua bộ lọc độ hiếm, hoặc chỉ loài bạn chọn.",
     ["rarities to fuse"]           = "Độ Hiếm Để Hợp Nhất",
     ["only fuse pets of these rarities. leave empty for any rarity."] = "Chỉ hợp nhất thú cưng có độ hiếm này. Để trống = mọi độ hiếm.",
-    ["only sell pets whose cash per second is this or lower. blank = no value limit. supports k, m, b."] = "Chỉ bán thú cưng có tiền/giây ≤ mức này. Để trống = không giới hạn.",
     ["feeds three matching pets into the fuse machine over and over. favorited and equipped pets are never used."] = "Đưa 3 thú cưng giống nhau vào máy hợp nhất liên tục. Thú cưng yêu thích và đang trang bị sẽ không bị dùng.",
 
     -- ── TAB SỰ KIỆN ──────────────────────
@@ -383,5 +380,11 @@ local D = {
     ["auto load state"]            = "Trạng Thái Tự Động Tải",
     ["set auto load"]              = "Đặt Tự Động Tải",
     ["clear auto load"]            = "Xóa Tự Động Tải",
-    ["reset configuration"]        = "Đặt Lại Cấu Hình",
-   
+    ["reset configuration"]        = "Đặt Lại Cấu Hình"
+}
+
+-- ══════════════════════════════════════════
+--  AUTO-TRANSLATOR (BỘ TỰ ĐỘNG DỊCH GIAO DIỆN)
+-- ══════════════════════════════════════════
+local function translateObj(obj)
+    if obj:IsA("TextLabel") or obj:IsA("TextButton") o
